@@ -47,7 +47,7 @@ def sub_bytes(state_matrix):
         [0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16]
     ]
 
-    subsituted_matrix = [[0 for _ in range(4)] for _ in range(4)]
+    substituted_matrix = [[0 for _ in range(4)] for _ in range(4)]
 
     for row in range(4):
         for col in range(4):
@@ -55,9 +55,9 @@ def sub_bytes(state_matrix):
             # High 4 bits for row, low 4 bits for column
             s_row = (byte >> 4) & 0x0F
             s_col = byte & 0x0F
-            subsituted_matrix[row][col] = S_BOX[s_row][s_col]
+            substituted_matrix[row][col] = S_BOX[s_row][s_col]
 
-    return subsituted_matrix
+    return substituted_matrix
 
 
 def shift_rows(state_matrix):
