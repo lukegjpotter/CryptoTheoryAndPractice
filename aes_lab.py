@@ -99,10 +99,32 @@ def add_round_key(state_matrix, round_key):
 
     return round_key_xored_matrix
 
+
 def aes_round(plaintext, round_key):
     """Perform one complete AES round"""
-    # TODO: Combine all functions
-    pass
+    # Step 1: Convert text to matrix
+    state = text_to_hex_matrix(plaintext)
+    print_matrix(state, "Initial State")
+
+    # Step 2: SubBytes
+    state = sub_bytes(state)
+    print_matrix(state, "After SubBytes")
+
+    # Step 3: ShiftRows
+    state = shift_rows(state)
+    print_matrix(state, "After ShiftRows")
+
+    # Step 4: AddRoundKey
+    state = add_round_key(state, round_key)
+    print_matrix(state, "After AddRoundKey")
+
+    return state
+
+def print_matrix(matrix, title="Matrix"):
+    """Pretty print a matrix in hexadecimal format"""
+    print(f"\n{title}:")
+    for row in matrix:
+        print([f"{byte:02x}" for byte in row])
 
 
 # Test your implementation
@@ -116,8 +138,9 @@ if __name__ == "__main__":
     ]
 
     result = aes_round(plaintext, round_key)
-    print("Final encrypted matrix:", result)
+    print_matrix(result, "Final encrypted matrix:")
 
+    print("\n---\nTest:")
     hex_matrix = text_to_hex_matrix("ABCDEFGHIJKLMNOP")
     print(f"text_to_hex_matrix: {hex_matrix}")
     substituted_matrix = sub_bytes(hex_matrix)
