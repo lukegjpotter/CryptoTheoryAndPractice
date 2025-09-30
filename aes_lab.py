@@ -59,12 +59,32 @@ def sub_bytes(state_matrix):
 
     return substituted_matrix
 
-
+# Row 0: No shift
+# Row 1: Left shift by 1 position
+# Row 2: Left shift by 2 positions
+# Row 3: Left shift by 3 positions
+# Before:
+# [[A, B, C, D],
+#  [E, F, G, H],
+#  [I, J, K, L],
+#  [M, N, O, P]]
+# -----
+# After:
+# [[A, B, C, D],
+#  [F, G, H, E],
+#  [K, L, I, J],
+#  [P, M, N, O]]
 def shift_rows(state_matrix):
     """Perform row shifts on the state matrix"""
-    # TODO: Implement this function
-    pass
+    shifted_matrix = [[0 for _ in range(4)] for _ in range(4)]
 
+    for row in range(4):
+        for col in range(4):
+            # shift left by 'row' positions
+            new_col = (col - row) % 4
+            shifted_matrix[row][new_col] = state_matrix[row][col]
+
+    return shifted_matrix
 
 def add_round_key(state_matrix, round_key):
     """XOR state matrix with round key"""
@@ -93,4 +113,7 @@ if __name__ == "__main__":
 
     hex_matrix = text_to_hex_matrix("ABCDEFGHIJKLMNOP")
     print(f"text_to_hex_matrix: {hex_matrix}")
-    print(f"sub_bytes: {sub_bytes(hex_matrix)}")
+    substituted_matrix = sub_bytes(hex_matrix)
+    print(f"sub_bytes: {substituted_matrix}")
+    shifted_matrix = shift_rows(substituted_matrix)
+    print(f"shift_rows: {shifted_matrix}")
