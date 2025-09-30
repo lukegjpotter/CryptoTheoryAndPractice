@@ -1,10 +1,27 @@
 # AES Programming Lab
 # Your Name: Luke GJ Potter
 
+# Test with "ABCDEFGHIJKLMNOP"
+# Should return:
+# [[0x41, 0x45, 0x49, 0x4d],
+#  [0x42, 0x46, 0x4a, 0x4e],
+#  [0x43, 0x47, 0x4b, 0x4f],
+#  [0x44, 0x48, 0x4c, 0x50]]
+# Convert each character to its ASCII hex value
+# Arrange in a 4x4 matrix using column-major order
+# Return a 2D list of integers
 def text_to_hex_matrix(plaintext):
     """Convert 16-character string to 4x4 hex matrix (column-major)"""
-    # TODO: Implement this function
-    pass
+    if len(plaintext) != 16: raise ValueError("plaintext must be 16 character string")
+
+    matrix = [[0 for _ in range(4)] for _ in range(4)]
+
+    for i, char in enumerate(plaintext):
+        row = i % 4
+        col = i // 4
+        matrix[row][col] = ord(char)
+
+    return matrix
 
 
 def sub_bytes(state_matrix):
@@ -43,3 +60,5 @@ if __name__ == "__main__":
 
     result = aes_round(plaintext, round_key)
     print("Final encrypted matrix:", result)
+
+    print(f"text_to_hex_matrix: {text_to_hex_matrix("ABCDEFGHIJKLMNOP")}")
