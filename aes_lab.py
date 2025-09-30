@@ -94,7 +94,7 @@ def add_round_key(state_matrix, round_key):
 
     for row in range(4):
         for col in range(4):
-            # shift left by 'row' positions
+            # XOR each byte of the state matrix with the corresponding byte of the round key
             round_key_xored_matrix[row][col] = state_matrix[row][col] ^ round_key[row][col]
 
     return round_key_xored_matrix
