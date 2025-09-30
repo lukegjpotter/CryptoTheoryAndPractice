@@ -86,11 +86,18 @@ def shift_rows(state_matrix):
 
     return shifted_matrix
 
+# XOR each byte of the state matrix with the corresponding byte of the round key
+# Return the new matrix
 def add_round_key(state_matrix, round_key):
     """XOR state matrix with round key"""
-    # TODO: Implement this function
-    pass
+    round_key_xored_matrix = [[0 for _ in range(4)] for _ in range(4)]
 
+    for row in range(4):
+        for col in range(4):
+            # shift left by 'row' positions
+            round_key_xored_matrix[row][col] = state_matrix[row][col] ^ round_key[row][col]
+
+    return round_key_xored_matrix
 
 def aes_round(plaintext, round_key):
     """Perform one complete AES round"""
@@ -114,6 +121,8 @@ if __name__ == "__main__":
     hex_matrix = text_to_hex_matrix("ABCDEFGHIJKLMNOP")
     print(f"text_to_hex_matrix: {hex_matrix}")
     substituted_matrix = sub_bytes(hex_matrix)
-    print(f"sub_bytes: {substituted_matrix}")
+    print(f"         sub_bytes: {substituted_matrix}")
     shifted_matrix = shift_rows(substituted_matrix)
-    print(f"shift_rows: {shifted_matrix}")
+    print(f"        shift_rows: {shifted_matrix}")
+    round_key_xored_matrix = add_round_key(shifted_matrix, round_key)
+    print(f"     add_round_key: {round_key_xored_matrix}")
